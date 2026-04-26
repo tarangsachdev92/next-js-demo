@@ -71,6 +71,12 @@ export default function RootLayout({
                 Blog
               </Link>
               <Link
+                href="/products"
+                className="rounded-full px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-200 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-50"
+              >
+                Products
+              </Link>
+              <Link
                 href="/rendering"
                 className="rounded-full px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-200 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-50"
               >

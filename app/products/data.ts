@@ -1,0 +1,29 @@
+export type Product = {
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+  price: number;
+  rating: number;
+  brand?: string;
+  thumbnail?: string;
+};
+
+type ProductsResponse = {
+  products: Product[];
+};
+
+const PRODUCTS_URL = "https://dummyjson.com/products";
+
+export async function getProducts() {
+  const response = await fetch(PRODUCTS_URL, {
+    next: { revalidate: 300 },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch products");
+  }
+
+  const data = (await response.json()) as ProductsResponse;
+  return data.products;
+}
