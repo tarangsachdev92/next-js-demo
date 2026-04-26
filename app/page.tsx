@@ -20,6 +20,12 @@ export default function Home() {
           >
             Go to Contact
           </Link>
+          <Link
+            href="/rendering"
+            className="inline-flex rounded-2xl bg-slate-100 px-4 py-3 text-sm font-medium text-slate-900 transition hover:bg-slate-200 dark:bg-slate-950 dark:text-slate-100 dark:hover:bg-slate-900"
+          >
+            Go to Rendering Menu
+          </Link>
         </div>
       </div>
     </div>
