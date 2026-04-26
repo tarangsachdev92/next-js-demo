@@ -1,4 +1,4 @@
-export const revalidate = 60;
+export const revalidate = 10;
 
 
 export default function ISRPage() {
@@ -10,7 +10,7 @@ export default function ISRPage() {
                     ISR Example
                 </h1>
                 <p className="mb-4 text-slate-600 dark:text-slate-300">
-                    This page is statically generated and refreshed every 60 seconds.
+                    This page is statically generated and refreshed every 10 seconds.
                 </p>
                 <p className="text-sm text-slate-700 dark:text-slate-300">
                     Cached render time: <strong>{cachedTime}</strong>
