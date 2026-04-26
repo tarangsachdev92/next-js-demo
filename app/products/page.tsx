@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getProducts } from "./data";
 
-export const revalidate = 300;
+export const revalidate = 30;
 
 function formatPrice(price: number) {
   return new Intl.NumberFormat("en-US", {
@@ -33,7 +33,7 @@ export default async function ProductsPage() {
                 </h1>
                 <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300">
                   This page fetches from DummyJSON and is regenerated in the
-                  background every 5 minutes, which makes it a nice fit for a
+                  background every 30 seconds, which makes it a nice fit for a
                   browsable catalog that changes occasionally.
                 </p>
               </div>
@@ -43,7 +43,7 @@ export default async function ProductsPage() {
                   ISR Window
                 </p>
                 <p className="mt-2 text-3xl font-semibold text-slate-900 dark:text-slate-100">
-                  300s
+                  30s
                 </p>
                 <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">
                   Time-based revalidation

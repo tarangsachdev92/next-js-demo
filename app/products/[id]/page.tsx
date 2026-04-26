@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProduct, getProducts } from "../data";
 
-export const revalidate = 300;
+export const revalidate = 30;
 
 function formatPrice(price: number) {
   return new Intl.NumberFormat("en-US", {

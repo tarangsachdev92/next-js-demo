@@ -17,7 +17,7 @@ const PRODUCTS_URL = "https://dummyjson.com/products";
 
 export async function getProducts() {
   const response = await fetch(PRODUCTS_URL, {
-    next: { revalidate: 300 },
+    next: { revalidate: 30 },
   });
 
   if (!response.ok) {
@@ -34,7 +34,7 @@ export async function getProduct(id: string) {
   }
 
   const response = await fetch(`${PRODUCTS_URL}/${id}`, {
-    next: { revalidate: 300 },
+    next: { revalidate: 30 },
   });
 
   if (response.status === 404) {
