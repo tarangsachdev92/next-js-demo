@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getProducts } from "./data";
 
 export const revalidate = 300;
@@ -112,9 +113,12 @@ export default async function ProductsPage() {
                     </p>
                   </div>
 
-                  <div className="rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white transition group-hover:bg-amber-500 group-hover:text-slate-950 dark:bg-slate-100 dark:text-slate-950">
-                    API Product
-                  </div>
+                  <Link
+                    href={`/products/${product.id}`}
+                    className="rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white transition group-hover:bg-amber-500 group-hover:text-slate-950 dark:bg-slate-100 dark:text-slate-950"
+                  >
+                    View details
+                  </Link>
                 </div>
               </div>
             </article>

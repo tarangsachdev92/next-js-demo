@@ -27,3 +27,23 @@ export async function getProducts() {
   const data = (await response.json()) as ProductsResponse;
   return data.products;
 }
+
+export async function getProduct(id: string) {
+  if (!/^\d+$/.test(id)) {
+    return null;
+  }
+
+  const response = await fetch(`${PRODUCTS_URL}/${id}`, {
+    next: { revalidate: 300 },
+  });
+
+  if (response.status === 404) {
+    return null;
+  }
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch product");
+  }
+
+  return (await response.json()) as Product;
+}
