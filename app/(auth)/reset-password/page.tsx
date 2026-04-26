@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { AuthForm } from "@/app/(auth)/auth-form";
 import { resetPassword } from "@/app/actions/auth";
+import { redirectIfAuthenticated } from "@/lib/auth/guards";
 
 type ResetPasswordPageProps = {
   searchParams: Promise<{
@@ -12,6 +13,7 @@ type ResetPasswordPageProps = {
 export default async function ResetPasswordPage({
   searchParams,
 }: ResetPasswordPageProps) {
+  await redirectIfAuthenticated();
   const params = await searchParams;
   const token = params.token ?? "";
 

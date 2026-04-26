@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getProduct, getProducts } from "../data";
+import { getProduct } from "../data";
+import { requireSession } from "@/lib/auth/guards";
 
-export const revalidate = 30;
+export const dynamic = "force-dynamic";
 
 function formatPrice(price: number) {
   return new Intl.NumberFormat("en-US", {
@@ -12,12 +13,15 @@ function formatPrice(price: number) {
   }).format(price);
 }
 
-export async function generateStaticParams() {
-  const products = await getProducts();
+function formatDateTime(value?: string | null) {
+  if (!value) {
+    return "Unknown";
+  }
 
-  return products.map((product) => ({
-    id: String(product.id),
-  }));
+  return new Intl.DateTimeFormat("en-US", {
+    dateStyle: "medium",
+    timeStyle: "medium",
+  }).format(new Date(value));
 }
 
 export default async function ProductDetailPage({
@@ -25,17 +29,13 @@ export default async function ProductDetailPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  await requireSession();
   const { id } = await params;
   const product = await getProduct(id);
 
   if (!product) {
     notFound();
   }
-
-  const lastUpdated = new Intl.DateTimeFormat("en-US", {
-    dateStyle: "medium",
-    timeStyle: "medium",
-  }).format(new Date());
 
   return (
     <div className="min-h-screen bg-slate-50 px-8 py-10 text-slate-900 dark:bg-slate-950 dark:text-slate-50">
@@ -49,8 +49,8 @@ export default async function ProductDetailPage({
           </Link>
 
           <div className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 text-sm text-slate-600 shadow-sm dark:border-slate-700 dark:bg-slate-950/50 dark:text-slate-300">
-            Last updated:
-            <span className="ml-2 font-medium">{lastUpdated}</span>
+            Product synced:
+            <span className="ml-2 font-medium">{formatDateTime(product.updatedAt)}</span>
           </div>
         </div>
 
@@ -120,8 +120,8 @@ export default async function ProductDetailPage({
                   Delivery note
                 </p>
                 <p className="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300">
-                  This detail page is cached with ISR and can be generated
-                  directly on first visit for valid product ids.
+                  This detail page now reads from the Postgres-backed catalog after
+                  the content import has synced product rows into the database.
                 </p>
               </div>
             </aside>

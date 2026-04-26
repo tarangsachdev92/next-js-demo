@@ -14,3 +14,11 @@ export const requireSession = cache(async () => {
 
   return session;
 });
+
+export const redirectIfAuthenticated = cache(async (destination = "/dashboard") => {
+  const session = await getSession();
+
+  if (session) {
+    redirect(destination);
+  }
+});

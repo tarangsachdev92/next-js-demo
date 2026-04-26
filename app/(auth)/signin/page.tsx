@@ -2,8 +2,11 @@ import Link from "next/link";
 
 import { signIn } from "@/app/actions/auth";
 import { AuthForm } from "@/app/(auth)/auth-form";
+import { redirectIfAuthenticated } from "@/lib/auth/guards";
 
-export default function SignInPage() {
+export default async function SignInPage() {
+  await redirectIfAuthenticated();
+
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#cffafe,_#f8fafc_55%)] px-6 py-16">
       <div className="mx-auto flex max-w-5xl flex-col items-center gap-12 lg:flex-row lg:items-start lg:justify-between">

@@ -2,8 +2,11 @@ import Link from "next/link";
 
 import { AuthForm } from "@/app/(auth)/auth-form";
 import { requestPasswordReset } from "@/app/actions/auth";
+import { redirectIfAuthenticated } from "@/lib/auth/guards";
 
-export default function ForgotPasswordPage() {
+export default async function ForgotPasswordPage() {
+  await redirectIfAuthenticated();
+
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#fef3c7,_#f8fafc_55%)] px-6 py-16">
       <div className="mx-auto flex max-w-5xl flex-col items-center gap-12 lg:flex-row lg:items-start lg:justify-between">

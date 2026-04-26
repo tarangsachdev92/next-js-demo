@@ -1,20 +1,16 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPost, getPosts } from "../posts";
+import { getPost } from "../posts";
+import { requireSession } from "@/lib/auth/guards";
 
-export async function generateStaticParams() {
-  const posts = await getPosts();
-
-  return posts.map((post) => ({
-    id: String(post.id),
-  }));
-}
+export const dynamic = "force-dynamic";
 
 export default async function BlogPost({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  await requireSession();
   const { id } = await params;
   const post = await getPost(id);
 
@@ -44,7 +40,7 @@ export default async function BlogPost({
             {post.title}
           </h1>
           <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300">
-            Fetched live from the DummyJSON posts API for this dynamic route.
+            Loaded from the local Postgres table after syncing from the DummyJSON feed.
           </p>
         </div>
 

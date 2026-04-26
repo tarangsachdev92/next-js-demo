@@ -24,6 +24,8 @@ if (process.env.NODE_ENV !== "production") {
 
 let usersTableReady: Promise<void> | undefined;
 let passwordResetTokensTableReady: Promise<void> | undefined;
+let productsTableReady: Promise<void> | undefined;
+let blogPostsTableReady: Promise<void> | undefined;
 
 export async function ensureUsersTable() {
   usersTableReady ??= pool
@@ -56,6 +58,44 @@ export async function ensurePasswordResetTokensTable() {
     .then(() => undefined);
 
   return passwordResetTokensTableReady;
+}
+
+export async function ensureProductsTable() {
+  productsTableReady ??= pool
+    .query(`
+      CREATE TABLE IF NOT EXISTS products (
+        id BIGINT PRIMARY KEY,
+        title TEXT NOT NULL,
+        description TEXT NOT NULL,
+        category TEXT NOT NULL,
+        price DOUBLE PRECISION NOT NULL,
+        rating DOUBLE PRECISION NOT NULL,
+        brand TEXT,
+        thumbnail TEXT,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      );
+    `)
+    .then(() => undefined);
+
+  return productsTableReady;
+}
+
+export async function ensureBlogPostsTable() {
+  blogPostsTableReady ??= pool
+    .query(`
+      CREATE TABLE IF NOT EXISTS blog_posts (
+        id BIGINT PRIMARY KEY,
+        title TEXT NOT NULL,
+        body TEXT NOT NULL,
+        tags TEXT[] NOT NULL DEFAULT '{}',
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      );
+    `)
+    .then(() => undefined);
+
+  return blogPostsTableReady;
 }
 
 export { pool };

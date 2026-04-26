@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { getPosts } from "./posts";
+import { requireSession } from "@/lib/auth/guards";
 
 export default async function Blog() {
+  await requireSession();
   const posts = await getPosts();
 
   return (
@@ -13,11 +15,11 @@ export default async function Blog() {
               Blog
             </p>
             <h1 className="max-w-2xl text-4xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
-              Live posts loaded from an API instead of local mock data.
+              Blog posts stored in Postgres and synced from the API.
             </h1>
             <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300">
-              This page now fetches its content from DummyJSON on the server,
-              then renders each post as a styled card in the App Router.
+              We import the DummyJSON blog feed into Postgres so the app can read
+              blog content from its own backend tables.
             </p>
           </div>
         </section>

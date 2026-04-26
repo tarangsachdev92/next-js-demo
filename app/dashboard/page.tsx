@@ -1,4 +1,5 @@
 import { signOut } from "@/app/actions/auth";
+import { ContentSyncForm } from "@/app/dashboard/content-sync-form";
 import { requireSession } from "@/lib/auth/guards";
 
 export default async function DashboardPage() {
@@ -31,6 +32,10 @@ export default async function DashboardPage() {
               {session.userId}
             </p>
           </div>
+        </div>
+
+        <div className="mt-8">
+          <ContentSyncForm />
         </div>
 
         <form action={signOut} className="mt-8">
